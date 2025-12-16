@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWCF FAMILY FEUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<style>
+    body{
+        background-image: url('images/background.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    div {
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+    }
+</style>
+<body>
+    <div class="flex flex-col items-center gap-6">
+    <!-- LOGO -->
+    <img class="pointer-events-none min-w-[500px]" src="images/family-Feud-Logo.png" >
+
+    <!-- Start Button -->
+    <a href="landing.html" onclick="playButtonSound(event)" class="relative inline-block">
+        <button class="relative px-8 py-3 text-lg font-semibold text-white border-2 border-white rounded-xl 
+                       shadow-lg shadow-white/30 
+                       transition-all duration-300 
+                       hover:shadow-white/60 hover:scale-105 
+                       focus:outline-none">
+          <span class="absolute inset-0 rounded-xl blur-md bg-white/20 opacity-70"></span>
+          <span class="relative">Start</span>
+        </button>
+      </a>
+    </div>  
+</body>
+</html>

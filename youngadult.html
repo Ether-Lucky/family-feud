@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Feud Young Adult Category</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<audio id="strike-sound" src="audios/strike.mp3"></audio>
+<style>
+  body {
+    background-image: url('images/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+</style>
+
+<body class="min-h-screen flex flex-col items-center py-6 gap-6">
+
+  <!-- QUESTION PANEL -->
+  <div class="w-[90%] max-w-4xl bg-sky-300 border-2 border-white rounded-2xl
+              shadow-lg shadow-black/30 px-6 py-4 text-center">
+    <h1 class="text-2xl font-bold text-white drop-shadow">
+      Saan makikita ang buong pangalan ng isang tao
+    </h1>
+  </div>
+
+  <!-- ANSWER BOARD (FIXED GRID: 2 COLUMNS x 3 ROWS) -->
+  <div class="w-[90%] max-w-4xl grid grid-cols-2 grid-rows-3 gap-4">
+
+    <!-- ANSWER 1 -->
+    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+                flex items-center justify-between px-4 py-3 text-white font-semibold">
+      <span>Driver's license</span>
+      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">33</div>
+
+      <div onclick="reveal(this)"
+           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer">
+        <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
+                    flex items-center justify-center font-bold shadow">1</div>
+      </div>
+    </div>
+
+    <!-- ANSWER 2 -->
+    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+                flex items-center justify-between px-4 py-3 text-white font-semibold">
+      <span>Job Application</span>
+      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">31</div>
+
+      <div onclick="reveal(this)"
+           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer">
+        <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
+                    flex items-center justify-center font-bold shadow">2</div>
+      </div>
+    </div>
+
+    <!-- ANSWER 3 -->
+    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+                flex items-center justify-between px-4 py-3 text-white font-semibold">
+      <span>Birth Certificate</span>
+      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">13</div>
+
+      <div onclick="reveal(this)"
+           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer">
+        <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
+                    flex items-center justify-center font-bold shadow">3</div>
+      </div>
+    </div>
+
+    <!-- ANSWER 4 -->
+    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+                flex items-center justify-between px-4 py-3 text-white font-semibold">
+      <span>Passport</span>
+      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">11</div>
+
+      <div onclick="reveal(this)"
+           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer">
+        <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
+                    flex items-center justify-center font-bold shadow">4</div>
+      </div>
+    </div>
+
+    <!-- EMPTY SLOT (INTENTIONAL) -->
+    <div class="invisible"></div>
+
+  </div>
+
+    <!-- BUTTONS ROW -->
+    <div class="flex gap-6 mt-4">
+        <button onclick="addStrike()" class="px-6 py-2 bg-red-500 border-2 border-white rounded-xl
+                       text-white font-bold shadow hover:scale-105 transition">
+          Strike
+        </button>
+        
+        <button id="timerBtn" onclick="toggleTimer()"
+                class="px-6 py-2 bg-sky-500 border-2 border-white rounded-xl
+                       text-white font-bold shadow hover:scale-105 transition">
+          Start
+        </button>
+
+        <button onclick="window.location.href='landing.html'" class="px-6 py-2 bg-green-500 border-2 border-white rounded-xl
+                       text-white font-bold shadow hover:scale-105 transition">
+          Next Question
+        </button>
+    
+      </div>
+    
+      <!-- TIMER -->
+      <div class="text-white text-4xl font-bold drop-shadow mt-2" id="timer">
+        05:00
+      </div>
+    
+      <!-- STRIKES -->
+      <div class="flex gap-6 mt-2">
+        <img src="images/x.svg" class="w-16 hidden" id="strike1">
+        <img src="images/x.svg" class="w-16 hidden" id="strike2">
+        <img src="images/x.svg" class="w-16 hidden" id="strike3">
+      </div>
+    
+
+  <script>
+    function reveal(el) {
+      el.classList.add('hidden');
+    }
+        // TIMER LOGIC
+    let time = 300; // 5 minutes
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function updateTimerDisplay() {
+        const minutes = String(Math.floor(time / 60)).padStart(2, '0');
+        const seconds = String(time % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+    }
+
+    function toggleTimer() {
+        const btn = document.getElementById('timerBtn');
+
+        if (!timerRunning) {
+        timerRunning = true;
+        btn.textContent = btn.textContent === 'Start' ? 'Pause' : 'Pause';
+
+        timerInterval = setInterval(() => {
+            if (time > 0) {
+            time--;
+            updateTimerDisplay();
+            }
+        }, 1000);
+        } else {
+        timerRunning = false;
+        btn.textContent = 'Resume';
+        clearInterval(timerInterval);
+        timerInterval = null;
+        }
+    }
+
+    // STRIKE LOGIC
+    let strikeCount = 0;
+
+    function addStrike() {
+        strikeCount++;
+        if (strikeCount <= 3) {
+        document.getElementById(`strike${strikeCount}`).classList.remove('hidden');
+        }
+
+        // Play strike sound
+        const strikeAudio = document.getElementById('strike-sound');
+        strikeAudio.currentTime = 0;
+        strikeAudio.play();
+    }
+
+    updateTimerDisplay();
+  </script>
+
+</body>
+</html>
