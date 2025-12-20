@@ -6,7 +6,9 @@
   <title>Family Feud Youth Category</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <audio id="strike-sound" src="audios/strike.mp3"></audio>
+
 <style>
   body {
     background-image: url('images/background.png');
@@ -22,175 +24,283 @@
   <!-- QUESTION PANEL -->
   <div class="w-[90%] max-w-4xl bg-sky-300 border-2 border-white rounded-2xl
               shadow-lg shadow-black/30 px-6 py-4 text-center">
-    <h1 class="text-2xl font-bold text-white drop-shadow">
-      Ano ang ginagawa ng teenager na ikinagagalit ng magulang
+    <h1 id="question-text" class="text-2xl font-bold text-white drop-shadow">
+      Question
     </h1>
   </div>
 
-  <!-- ANSWER BOARD (FIXED GRID: 2 COLUMNS x 3 ROWS) -->
+  <!-- ANSWER BOARD -->
   <div class="w-[90%] max-w-4xl grid grid-cols-2 grid-rows-3 gap-4">
 
+    <!-- ANSWER TEMPLATE (1–5) -->
     <!-- ANSWER 1 -->
-    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
                 flex items-center justify-between px-4 py-3 text-white font-semibold">
-      <span>Magsinungaling</span>
-      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">32</div>
+      <span id="answer-text-0"></span>
+      <div id="answer-score-0" class="bg-white/20 border border-white rounded-lg px-4 py-1"></div>
 
-      <div onclick="reveal(this)"
-           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
-                  flex items-center justify-center cursor-pointer">
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer" onclick="reveal(this)">
         <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
                     flex items-center justify-center font-bold shadow">1</div>
       </div>
     </div>
 
     <!-- ANSWER 2 -->
-    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
                 flex items-center justify-between px-4 py-3 text-white font-semibold">
-      <span>Late Umuwi</span>
-      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">22</div>
+      <span id="answer-text-1"></span>
+      <div id="answer-score-1" class="bg-white/20 border border-white rounded-lg px-4 py-1"></div>
 
-      <div onclick="reveal(this)"
-           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
-                  flex items-center justify-center cursor-pointer">
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer" onclick="reveal(this)">
         <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
                     flex items-center justify-center font-bold shadow">2</div>
       </div>
     </div>
 
     <!-- ANSWER 3 -->
-    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
                 flex items-center justify-between px-4 py-3 text-white font-semibold">
-      <span>Sumasagot</span>
-      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">19</div>
+      <span id="answer-text-2"></span>
+      <div id="answer-score-2" class="bg-white/20 border border-white rounded-lg px-4 py-1"></div>
 
-      <div onclick="reveal(this)"
-           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
-                  flex items-center justify-center cursor-pointer">
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer" onclick="reveal(this)">
         <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
                     flex items-center justify-center font-bold shadow">3</div>
       </div>
     </div>
 
     <!-- ANSWER 4 -->
-    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
                 flex items-center justify-between px-4 py-3 text-white font-semibold">
-      <span>Maglasing</span>
-      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">12</div>
+      <span id="answer-text-3"></span>
+      <div id="answer-score-3" class="bg-white/20 border border-white rounded-lg px-4 py-1"></div>
 
-      <div onclick="reveal(this)"
-           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
-                  flex items-center justify-center cursor-pointer">
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer" onclick="reveal(this)">
         <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
                     flex items-center justify-center font-bold shadow">4</div>
       </div>
     </div>
 
     <!-- ANSWER 5 -->
-    <div class="relative bg-sky-300 border-2 border-white rounded-xl shadow-lg
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
                 flex items-center justify-between px-4 py-3 text-white font-semibold">
-      <span>Manigarilyo</span>
-      <div class="bg-white/20 border border-white rounded-lg px-4 py-1">7</div>
+      <span id="answer-text-4"></span>
+      <div id="answer-score-4" class="bg-white/20 border border-white rounded-lg px-4 py-1"></div>
 
-      <div onclick="reveal(this)"
-           class="absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
-                  flex items-center justify-center cursor-pointer">
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer" onclick="reveal(this)">
         <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
                     flex items-center justify-center font-bold shadow">5</div>
       </div>
     </div>
 
-    <!-- EMPTY SLOT (INTENTIONAL) -->
     <div class="invisible"></div>
-
   </div>
 
-    <!-- BUTTONS ROW -->
-    <div class="flex gap-6 mt-4">
-        <button onclick="addStrike()" class="px-6 py-2 bg-red-500 border-2 border-white rounded-xl
-                       text-white font-bold shadow hover:scale-105 transition">
-          Strike
-        </button>
-        
-        <button id="timerBtn" onclick="toggleTimer()"
-                class="px-6 py-2 bg-sky-500 border-2 border-white rounded-xl
-                       text-white font-bold shadow hover:scale-105 transition">
-          Start
-        </button>
+  <!-- BUTTONS -->
+  <div class="flex gap-6 mt-4">
+    <button onclick="addStrike()" class="px-6 py-2 bg-red-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Strike
+    </button>
 
-        <button onclick="window.location.href='landing.html'" class="px-6 py-2 bg-green-500 border-2 border-white rounded-xl
-                       text-white font-bold shadow hover:scale-105 transition">
-          Next Question
-        </button>
-    
-      </div>
-    
-      <!-- TIMER -->
-      <div class="text-white text-4xl font-bold drop-shadow mt-2" id="timer">
-        05:00
-      </div>
-    
-      <!-- STRIKES -->
-      <div class="flex gap-6 mt-2">
-        <img src="images/x.svg" class="w-16 hidden" id="strike1">
-        <img src="images/x.svg" class="w-16 hidden" id="strike2">
-        <img src="images/x.svg" class="w-16 hidden" id="strike3">
-      </div>
-    
+    <button id="timerBtn" onclick="toggleTimer()" class="px-6 py-2 bg-sky-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Start
+    </button>
 
-  <script>
-    function reveal(el) {
-      el.classList.add('hidden');
-    }
-        // TIMER LOGIC
-    let time = 300; // 5 minutes
-    let timerInterval = null;
-    let timerRunning = false;
+    <button onclick="window.location.href='landing.html'" class="px-6 py-2 bg-green-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Next Question
+    </button>
+  </div>
 
-    function updateTimerDisplay() {
-        const minutes = String(Math.floor(time / 60)).padStart(2, '0');
-        const seconds = String(time % 60).padStart(2, '0');
-        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
-    }
+  <!-- TIMER -->
+  <div id="timer" class="text-white text-4xl font-bold drop-shadow mt-2">05:00</div>
 
-    function toggleTimer() {
-        const btn = document.getElementById('timerBtn');
+  <!-- STRIKES -->
+  <div class="flex gap-6 mt-2">
+    <img src="images/x.svg" class="w-16 hidden" id="strike1">
+    <img src="images/x.svg" class="w-16 hidden" id="strike2">
+    <img src="images/x.svg" class="w-16 hidden" id="strike3">
+  </div>
 
-        if (!timerRunning) {
-        timerRunning = true;
-        btn.textContent = btn.textContent === 'Start' ? 'Pause' : 'Pause';
+<script>
+/* ================= QUESTIONS ================= */
+const questions = [
+  {
+    question: "App na madalas ginagamit ng kabataan",
+    answers: [
+      { text: "Facebook", score: 40 },
+      { text: "TikTok", score: 30 },
+      { text: "Instagram", score: 15 },
+      { text: "Messenger", score: 10 },
+      { text: "YouTube", score: 5 }
+    ]
+  },
+  {
+    question: "Bagay na ginagawa kapag bored",
+    answers: [
+      { text: "Mag cellphone", score: 45 },
+      { text: "Manood ng videos", score: 25 },
+      { text: "Makinig ng music", score: 15 },
+      { text: "Matulog", score: 10 },
+      { text: "Maglaro", score: 5 }
+    ]
+  },
+  {
+    question: "Pagkain na paborito ng kabataan",
+    answers: [
+      { text: "Burger", score: 35 },
+      { text: "Pizza", score: 30 },
+      { text: "Fries", score: 20 },
+      { text: "Fried Chicken", score: 10 },
+      { text: "Ramen", score: 5 }
+    ]
+  },
+  {
+    question: "Bagay na kadalasang dala sa school",
+    answers: [
+      { text: "Cellphone", score: 40 },
+      { text: "Bag", score: 25 },
+      { text: "Notebook", score: 15 },
+      { text: "Ballpen", score: 10 },
+      { text: "Laptop", score: 10 }
+    ]
+  },
+  {
+    question: "Rason kung bakit puyat ang kabataan",
+    answers: [
+      { text: "Cellphone", score: 45 },
+      { text: "School works", score: 25 },
+      { text: "Online games", score: 15 },
+      { text: "Social media", score: 10 },
+      { text: "Netflix", score: 5 }
+    ]
+  },
+  {
+    question: "Uri ng music na sikat sa kabataan",
+    answers: [
+      { text: "Pop", score: 35 },
+      { text: "K-pop", score: 30 },
+      { text: "Hip-hop", score: 20 },
+      { text: "R&B", score: 10 },
+      { text: "Rock", score: 5 }
+    ]
+  },
+  {
+    question: "Bagay na ginagawa sa barkada",
+    answers: [
+      { text: "Kwentuhan", score: 30 },
+      { text: "Kumain", score: 25 },
+      { text: "Mag gala", score: 20 },
+      { text: "Mag picture", score: 15 },
+      { text: "Maglaro", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na kinaka-stress-an ng kabataan",
+    answers: [
+      { text: "School", score: 40 },
+      { text: "Exams", score: 25 },
+      { text: "Family", score: 15 },
+      { text: "Love life", score: 10 },
+      { text: "Friends", score: 10 }
+    ]
+  },
+  {
+    question: "Online game na sikat sa kabataan",
+    answers: [
+      { text: "Mobile Legends", score: 45 },
+      { text: "Valorant", score: 20 },
+      { text: "Call of Duty", score: 15 },
+      { text: "Genshin Impact", score: 10 },
+      { text: "Minecraft", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na chine-check agad pagkagising",
+    answers: [
+      { text: "Cellphone", score: 55 },
+      { text: "Messages", score: 20 },
+      { text: "Social media", score: 15 },
+      { text: "Oras", score: 5 },
+      { text: "Notifications", score: 5 }
+    ]
+  }
+];
 
-        timerInterval = setInterval(() => {
-            if (time > 0) {
-            time--;
-            updateTimerDisplay();
-            }
-        }, 1000);
-        } else {
-        timerRunning = false;
-        btn.textContent = 'Resume';
-        clearInterval(timerInterval);
-        timerInterval = null;
-        }
-    }
 
-    // STRIKE LOGIC
-    let strikeCount = 0;
 
-    function addStrike() {
-        strikeCount++;
-        if (strikeCount <= 3) {
-        document.getElementById(`strike${strikeCount}`).classList.remove('hidden');
-        }
+function loadRandomQuestion() {
+  const data = questions[Math.floor(Math.random() * questions.length)];
 
-        // Play strike sound
-        const strikeAudio = document.getElementById('strike-sound');
-        strikeAudio.currentTime = 0;
-        strikeAudio.play();
-    }
+  document.getElementById("question-text").textContent = data.question;
 
-    updateTimerDisplay();
-  </script>
+  data.answers.forEach((ans, i) => {
+    document.getElementById(`answer-text-${i}`).textContent = ans.text;
+    document.getElementById(`answer-score-${i}`).textContent = ans.score;
+    document.querySelectorAll(".cover")[i].classList.remove("hidden");
+  });
+
+  strikeCount = 0;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`strike${i}`).classList.add("hidden");
+  }
+}
+
+/* ================= GAME LOGIC ================= */
+function reveal(el) {
+  el.classList.add('hidden');
+}
+
+let strikeCount = 0;
+function addStrike() {
+  strikeCount++;
+  if (strikeCount <= 3) {
+    document.getElementById(`strike${strikeCount}`).classList.remove('hidden');
+  }
+  const audio = document.getElementById('strike-sound');
+  audio.currentTime = 0;
+  audio.play();
+}
+
+/* ================= TIMER ================= */
+let time = 300;
+let timerInterval = null;
+let running = false;
+
+function updateTimer() {
+  const m = String(Math.floor(time / 60)).padStart(2, '0');
+  const s = String(time % 60).padStart(2, '0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('timerBtn');
+  if (!running) {
+    running = true;
+    btn.textContent = 'Pause';
+    timerInterval = setInterval(() => {
+      if (time > 0) {
+        time--;
+        updateTimer();
+      }
+    }, 1000);
+  } else {
+    running = false;
+    btn.textContent = 'Resume';
+    clearInterval(timerInterval);
+  }
+}
+
+updateTimer();
+window.onload = loadRandomQuestion;
+</script>
 
 </body>
 </html>
