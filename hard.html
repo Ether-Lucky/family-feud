@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Feud Hard Category</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<audio id="strike-sound" src="audios/strike.mp3"></audio>
+
+<style>
+  body {
+    background-image: url('images/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+</style>
+
+<body class="min-h-screen flex flex-col items-center py-6 gap-6">
+
+  <!-- QUESTION PANEL -->
+<div class="w-[90%] max-w-4xl bg-sky-300 border-2 border-white rounded-2xl
+shadow-lg shadow-black/30 px-6 py-4 flex flex-col items-center justify-center text-center">
+
+<!-- Question and Score wrapper -->
+<div class="flex flex-col items-center justify-center gap-3 w-full">
+<!-- Question Text -->
+<h1 id="question-text" class="text-2xl font-bold text-white drop-shadow">
+Question
+</h1>
+
+<!-- TOTAL SCORE -->
+<div id="total-score-container" class="w-32 h-12 flex items-center justify-center
+                            bg-white/20 border border-white rounded-lg
+                            text-xl font-bold text-white">
+0
+</div>
+</div>
+</div>
+
+    <!-- ANSWER BOARD -->
+<div id="answer-board"
+class="w-[90%] max-w-4xl grid grid-cols-2 gap-4">
+</div>
+
+  <!-- BUTTONS -->
+  <div class="flex gap-6 mt-4">
+    <button onclick="addStrike()" class="px-6 py-2 bg-red-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Strike
+    </button>
+
+    <button id="timerBtn" onclick="toggleTimer()" class="px-6 py-2 bg-sky-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Start
+    </button>
+
+    <button onclick="window.location.href='landing.html'" class="px-6 py-2 bg-green-500 border-2 border-white rounded-xl
+                   text-white font-bold shadow hover:scale-105 transition">
+      Next Question
+    </button>
+  </div>
+
+  <!-- TIMER -->
+  <div id="timer" class="text-white text-4xl font-bold drop-shadow mt-2">05:00</div>
+
+  <!-- STRIKES -->
+  <div class="flex gap-6 mt-2">
+    <img src="images/x.svg" class="w-16 hidden" id="strike1">
+    <img src="images/x.svg" class="w-16 hidden" id="strike2">
+    <img src="images/x.svg" class="w-16 hidden" id="strike3">
+  </div>
+
+<script>
+/* ================= QUESTIONS ================= */
+const questions = [
+  {
+    question: "Bagay na mahirap ipaliwanag",
+    answers: [
+      { text: "Feelings", score: 40 },
+      { text: "Dreams", score: 30 },
+      { text: "Thoughts", score: 20 },
+      { text: "Luck", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na hindi nakikita pero nararamdaman",
+    answers: [
+      { text: "Hangin", score: 35 },
+      { text: "Pagod", score: 30 },
+      { text: "Takot", score: 20 },
+      { text: "Saya", score: 15 }
+    ]
+  },
+  {
+    question: "Bagay na palaging nauubos",
+    answers: [
+      { text: "Oras", score: 40 },
+      { text: "Pasensya", score: 30 },
+      { text: "Energy", score: 20 },
+      { text: "Pagkakataon", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na mahirap ibalik kapag nawala",
+    answers: [
+      { text: "Trust", score: 45 },
+      { text: "Time", score: 25 },
+      { text: "Opportunity", score: 20 },
+      { text: "Memories", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na nakakaapekto sa desisyon",
+    answers: [
+      { text: "Emotions", score: 35 },
+      { text: "Experience", score: 30 },
+      { text: "Pressure", score: 20 },
+      { text: "Fear", score: 15 }
+    ]
+  },
+  {
+    question: "Bagay na nagbabago depende sa sitwasyon",
+    answers: [
+      { text: "Mood", score: 40 },
+      { text: "Perspective", score: 30 },
+      { text: "Plans", score: 20 },
+      { text: "Attitude", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na hindi puwedeng bilhin",
+    answers: [
+      { text: "Happiness", score: 35 },
+      { text: "Love", score: 30 },
+      { text: "Respect", score: 20 },
+      { text: "Trust", score: 15 }
+    ]
+  },
+  {
+    question: "Bagay na nakakaapekto sa performance",
+    answers: [
+      { text: "Focus", score: 40 },
+      { text: "Motivation", score: 30 },
+      { text: "Stress", score: 20 },
+      { text: "Confidence", score: 10 }
+    ]
+  },
+  {
+    question: "Bagay na madalas ipinagpapaliban",
+    answers: [
+      { text: "Decisions", score: 35 },
+      { text: "Plans", score: 30 },
+      { text: "Responsibilities", score: 20 },
+      { text: "Goals", score: 15 }
+    ]
+  },
+  {
+    question: "Bagay na mahirap sukatin",
+    answers: [
+      { text: "Happiness", score: 40 },
+      { text: "Success", score: 30 },
+      { text: "Love", score: 20 },
+      { text: "Effort", score: 10 }
+    ]
+  }
+];
+
+function createAnswerCard(index, text, score) {
+  return `
+    <div class="relative answer-card bg-sky-300 border-2 border-white rounded-xl shadow-lg
+                flex items-center justify-between px-4 py-3 text-white font-semibold">
+
+      <span id="answer-text-${index}">${text}</span>
+
+      <div id="answer-score-${index}"
+           class="bg-white/20 border border-white rounded-lg px-4 py-1">
+        ${score}
+      </div>
+
+      <div class="cover absolute inset-0 bg-sky-400 rounded-xl border-2 border-white
+                  flex items-center justify-center cursor-pointer"
+           onclick="reveal(this)">
+        <div class="absolute -top-3 bg-white text-sky-500 w-8 h-8 rounded-full
+                    flex items-center justify-center font-bold shadow">
+          ${index + 1}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+/* ================= GAME LOGIC ================= */
+let totalScore = 0; // global variable to keep track
+
+function loadRandomQuestion() {
+  const data = questions[Math.floor(Math.random() * questions.length)];
+
+  document.getElementById("question-text").textContent = data.question;
+
+  const board = document.getElementById("answer-board");
+  board.innerHTML = ""; // clear old answers
+
+  data.answers.forEach((ans, i) => {
+    board.innerHTML += createAnswerCard(i, ans.text, ans.score);
+  });
+
+  // Reset strikes
+  strikeCount = 0;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`strike${i}`).classList.add("hidden");
+  }
+
+  // Reset total score
+  totalScore = 0;
+  document.getElementById("total-score-container").textContent = totalScore;
+}
+
+
+function reveal(el) {
+  el.classList.add("hidden");
+
+  const covers = document.querySelectorAll(".cover");
+  const index = Array.from(covers).indexOf(el);
+
+  const score = parseInt(
+    document.getElementById(`answer-score-${index}`).textContent
+  );
+
+  totalScore += score;
+  document.getElementById("total-score-container").textContent = totalScore;
+}
+
+
+let strikeCount = 0;
+function addStrike() {
+  strikeCount++;
+  if (strikeCount <= 3) {
+    document.getElementById(`strike${strikeCount}`).classList.remove('hidden');
+  }
+  const audio = document.getElementById('strike-sound');
+  audio.currentTime = 0;
+  audio.play();
+}
+
+/* ================= TIMER ================= */
+let time = 300;
+let timerInterval = null;
+let running = false;
+
+function updateTimer() {
+  const m = String(Math.floor(time / 60)).padStart(2, '0');
+  const s = String(time % 60).padStart(2, '0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('timerBtn');
+  if (!running) {
+    running = true;
+    btn.textContent = 'Pause';
+    timerInterval = setInterval(() => {
+      if (time > 0) {
+        time--;
+        updateTimer();
+      }
+    }, 1000);
+  } else {
+    running = false;
+    btn.textContent = 'Resume';
+    clearInterval(timerInterval);
+  }
+}
+
+updateTimer();
+window.onload = loadRandomQuestion;
+</script>
+
+</body>
+</html>
