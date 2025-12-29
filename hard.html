@@ -53,6 +53,13 @@ class="w-[90%] max-w-4xl grid grid-cols-2 gap-4">
       Strike
     </button>
 
+    <button id="resetStrikeBtn"
+          onclick="resetStrikes()"
+          class="hidden px-6 py-2 bg-yellow-500 border-2 border-white rounded-xl
+                 text-white font-bold shadow hover:scale-105 transition">
+    Reset
+    </button>
+
     <button id="timerBtn" onclick="toggleTimer()" class="px-6 py-2 bg-sky-500 border-2 border-white rounded-xl
                    text-white font-bold shadow hover:scale-105 transition">
       Start
@@ -197,6 +204,8 @@ function createAnswerCard(index, text, score) {
 /* ================= GAME LOGIC ================= */
 let totalScore = 0; // global variable to keep track
 
+document.getElementById("resetStrikeBtn").classList.add("hidden");
+
 function loadRandomQuestion() {
   const data = questions[Math.floor(Math.random() * questions.length)];
 
@@ -237,15 +246,34 @@ function reveal(el) {
 
 
 let strikeCount = 0;
+
 function addStrike() {
   strikeCount++;
+
   if (strikeCount <= 3) {
     document.getElementById(`strike${strikeCount}`).classList.remove('hidden');
   }
+
+  // Show reset button on first strike
+  if (strikeCount === 1) {
+    document.getElementById("resetStrikeBtn").classList.remove("hidden");
+  }
+
   const audio = document.getElementById('strike-sound');
   audio.currentTime = 0;
   audio.play();
 }
+
+function resetStrikes() {
+  strikeCount = 0;
+
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`strike${i}`).classList.add("hidden");
+  }
+
+  document.getElementById("resetStrikeBtn").classList.add("hidden");
+}
+
 
 /* ================= TIMER ================= */
 let time = 300;
